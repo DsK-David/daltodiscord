@@ -1,6 +1,6 @@
 const { Client, IntentsBitField, EmbedBuilder, GuildInviteManager } = require('discord.js');
 require('dotenv').config();
-const puppeteer = require('puppeteer');
+
 
 
 
@@ -305,32 +305,7 @@ client.on('messageCreate', (message) => {
                 message.channel.send('Você não tem permissão para usar esse comando.');
             }
         }
-        else if (command === 'search') {
-            const searchQuery = args.join(' ');
-            if (!searchQuery) {
-                message.channel.send('Por favor, forneça um termo de pesquisa válido.');
-                return;
-            }
-
-            message.channel.send(`Pesquisando por: ${searchQuery}`);
-
-            (async () => {
-                const browser = await puppeteer.launch({ headless: false, executablePath: 'C:\Program Files\Google\Chrome\Application/chrome.exe' });
-                const page = await browser.newPage();
-                await page.goto(`https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`);
-
-                const screenshot = await page.screenshot({ encoding: 'png' });
-                message.channel.send({
-                    files: [{
-                        attachment: screenshot,
-                        name: 'screenshot.png'
-                    }]
-                });
-
-                await browser.close();
-            })();
-        }
-        else  if(command === 'anime'){
+        else   if(command === 'anime'){
                 const query=args.join(' ')
                 const fetch = require('node-fetch')
                   fetch(`https://animechan.xyz/api/random/anime?title=${query}`)
