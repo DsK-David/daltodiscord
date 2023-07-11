@@ -311,6 +311,11 @@ client.on('messageCreate', (message) => {
                   fetch(`https://animechan.xyz/api/random/anime?title=${query}`)
                   .then(response => response.json())
                   .then(data =>{
+                    if (data.error) {
+        // Anime não encontrado
+        message.channel.send('Anime não encontrado.');
+        return;
+      }
                     const {anime,character,quote} = data
                    
                     const embed = new EmbedBuilder()
