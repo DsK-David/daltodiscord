@@ -6,6 +6,7 @@ require('dotenv').config();
 
 
 
+
 //ACESS_TOKEN do discord development portal
 const TOKEN = process.env.TOKEN
 //prefixo do comando
@@ -109,7 +110,8 @@ client.on('messageCreate', (message) => {
                 { name: 'say (o que queres que ele repita)', value: 'Repete o que o usuário mandar.' },
                 { name: 'cat', value: 'Mostra uma imagem de um gato aleatório.' },
                 { name: 'dog', value: 'Mostra uma imagem de um cachorro aleatório.' },
-                {name: 'anime (nome do anime)',value:'Manda um quote aleatorio do anime desejado'},
+                { name: 'catboy', value: 'Mostra uma imagem de catboy aleatório.' },
+                {name: 'anime (nome do anime)',value:'Manda informações sobre o anime como foto descrção e trailer official'},
                 {name:'waifu',value:'Mostra uma imagem aleatoria de um waifu'},
                 { name: 'flipcoin', value: 'Joga uma moeda e mostra o resultado (cara ou coroa).' },
                 { name: 'roll (quantidade de lados do dado)', value: 'Rola um dado com a quantidade de lados especificada.' },
@@ -308,7 +310,7 @@ client.on('messageCreate', (message) => {
         else   if(command === 'anime'){
                 const query=args.join(' ')
                 const fetch = require('node-fetch')
-                  fetch(`https://animechan.xyz/api/random/anime?title=${query}`)
+                  fetch(`https://kitsu.io/api/edge/anime?filter[text]=${query}`)
                   .then(response => response.json())
                   .then(data =>{
                     if (data.error) {
@@ -316,25 +318,37 @@ client.on('messageCreate', (message) => {
         message.channel.send('Anime não encontrado.');
         return;
       }
-                    const {anime,character,quote} = data
-                   
-                    const embed = new EmbedBuilder()
-        .setColor('#0099ff')
-        .setTitle('Citação de Anime')
-        .setDescription(`"${quote}"`)
-        .addFields(
-          { name: 'Anime', value: anime },
-          { name: 'Personagem', value: character }
-        );
+      const anime = data.data[0];
+      const description = anime.attributes.description;
+      const title = anime.attributes.titles.en;
+      const posterImage = anime.attributes.posterImage.large;
+      const youtubeVideoId = anime.attributes.youtubeVideoId;
+      const thumbnail = `https://img.youtube.com/vi/${youtubeVideoId}/maxresdefault.jpg`;
 
-            message.reply({ embeds: [embed] })
+     
+
+      const embed = new EmbedBuilder()
+        .setColor('#0099ff')
+        .setTitle('Anime')
+        .setDescription(description)
+        .addFields(
+          { name: 'Anime', value: title },
+         
+        )
+        .setImage(posterImage)
+        .setURL(`https://www.youtube.com/watch?v=${youtubeVideoId}`)
+        .setThumbnail(thumbnail);
+
+
+            message.channel.send({ embeds: [embed] })
             .catch(error => {
                 console.error('Erro ao obter quote', error);
                 message.channel.send('Erro ao obter quote',error);
             });
-
+       
                    
                   })
+                  
                 
             
                
@@ -389,6 +403,20 @@ client.on('messageCreate', (message) => {
       // Faça o que desejar com a URL da imagem aqui
     }
   })
+  
+        }
+        if(command === 'catboy'){
+            const fetch = require('node-fetch')
+            fetch('https://api.catboys.com/img')
+            .then(response => response.json())
+        .then(data => {
+        const {url} = data
+        if (url.length > 0) {
+        
+        message.channel.send(url)
+        // Faça o que desejar com a URL da imagem aqui
+        }
+        })
         }
          else if (command === 'flipcoin') {
             // Comando para jogar uma moeda
