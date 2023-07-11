@@ -19,5 +19,9 @@ rad.json
 #License-file
 *.flf
 #Test results file
+<<<<<<< HEAD
 TestResults.xml
 .env
+=======
+TestResults.xml
+>>>>>>> 41f1c4a150c2ee142b54a71bde5d388109e681d5
