@@ -323,11 +323,11 @@ client.on('messageCreate', (message) => {
       const title = anime.attributes.titles.en;
       const posterImage = anime.attributes.posterImage.large;
       const youtubeVideoId = anime.attributes.youtubeVideoId;
-      const thumbnail = `https://img.youtube.com/vi/${youtubeVideoId}/maxresdefault.jpg`;
+      const thumbnail = anime.attributes.coverImage.large;
+      const youtubeLink = `https://www.youtube.com/watch?v=${youtubeVideoId}`
 
-     
-
-      const embed = new EmbedBuilder()
+     try{
+const embed = new EmbedBuilder()
         .setColor('#0099ff')
         .setTitle('Anime')
         .setDescription(description)
@@ -341,13 +341,12 @@ client.on('messageCreate', (message) => {
 
 
             message.channel.send({ embeds: [embed] })
-            .catch(error => {
-                console.error('Erro ao obter quote', error);
-                message.channel.send('Erro ao obter quote',error);
-            });
-       
-                   
-                  })
+            message.channel.send(youtubeLink)
+     }catch(error){
+ message.channel.send('Ocorreu um erro ao buscar o anime,ou ele não esta no nosso banco de dados ou não conseguimos construir o embed.');
+     }
+
+    })
                   
                 
             
