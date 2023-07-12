@@ -2,11 +2,6 @@ const { Client, IntentsBitField, EmbedBuilder, GuildInviteManager } = require('d
 require('dotenv').config();
 
 
-
-
-
-
-
 //ACESS_TOKEN do discord development portal
 const TOKEN = process.env.TOKEN
 //prefixo do comando
@@ -431,16 +426,14 @@ const embed = new EmbedBuilder()
             const result = Math.floor(Math.random() * sides) + 1;
             message.channel.send(`O dado rolou e o resultado foi: ${result}!`);
         }
-
-
-
     }
 });
+
 
 client.on('guildMemberAdd', (member) => {
     const welcomeMessage = `Bem-vindo ao servidor, ${member.user.username}! Seja ativo e respeite as regras. 
     Para ver os comandos disponíveis, digite 'dalto comandos'.`;
     member.send(welcomeMessage);
-});
+})
 
-client.login(TOKEN);
+client.login(TOKEN)

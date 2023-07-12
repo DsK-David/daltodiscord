@@ -21,6 +21,7 @@
     "google-translate-api": "^2.3.0",
     "openai": "^3.3.0",
     "puppeteer": "^20.8.0",
-    "readline-sync": "^1.4.10"
+    "readline-sync": "^1.4.10",
+    "ytdl-core": "^4.11.4"
   }
 }

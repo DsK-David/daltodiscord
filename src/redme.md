@@ -77,3 +77,71 @@ if (command === 'ban') {
 
 client.login(TOKEN)
 
+//comando de audio youtube
+if (command === 'play') {
+    // Verifica se foi fornecida uma URL válida do YouTube
+    const url = args[0];
+    if (!ytdl.validateURL(url)) {
+      message.reply('Por favor, forneça uma URL válida do YouTube.');
+      return;
+    }
+  
+    // Obtém informações da música
+    ytdl.getInfo(url, (error, info) => {
+      if (error) {
+        console.error('Erro ao obter informações do vídeo:', error);
+        message.reply('Ocorreu um erro ao obter informações do vídeo.');
+        return;
+      }
+      if (info.player_response.playabilityStatus.status === 'UNPLAYABLE') {
+        message.reply('O vídeo não está disponível para reprodução.');
+        return;
+      }
+  
+      // Verifica se o vídeo é um formato de áudio suportado
+      if (info.formats.some(format => format.container === 'mp3' && format.audioBitrate)) {
+        // Verifica se o usuário está em um canal de voz válido
+        const voiceChannelId = message.member.voice.channelId;
+        const voiceChannel = client.channels.cache.get(voiceChannelId);
+  
+        if (!voiceChannel || voiceChannel.type !== 'GUILD_VOICE') {
+          message.reply('Você precisa estar em um canal de voz válido para reproduzir música.');
+          return;
+        }
+  
+        voiceChannel.join()
+          .then(connection => {
+            // Reproduz o áudio
+            const stream = ytdl(url, { filter: 'audioonly', quality: 'highestaudio' });
+            const dispatcher = connection.play(stream);
+  
+            // Evento de finalização do áudio
+            dispatcher.on('finish', () => {
+              voiceChannel.leave();
+            });
+  
+            // Evento de erro na reprodução do áudio
+            dispatcher.on('error', error => {
+              console.error('Erro ao reproduzir áudio:', error);
+              voiceChannel.leave();
+            });
+  
+            // Envia uma mensagem informando a música que está sendo reproduzida
+            const embed = new MessageEmbed()
+              .setColor('#0099ff')
+              .setTitle('Reproduzindo música')
+              .setDescription(`Tocando: ${info.videoDetails.title}`);
+  
+            message.channel.send({ embeds: [embed] });
+          })
+          .catch(error => {
+            console.error('Erro ao entrar no canal de voz:', error);
+            message.reply('Ocorreu um erro ao entrar no canal de voz.');
+          });
+      } else {
+        message.reply('O formato de áudio do vídeo não é suportado (deve ser .mp3 com áudio).');
+      }
+    });
+  }
+  }
+  
