@@ -319,6 +319,11 @@ client.on('messageCreate', (message) => {
       }
       const anime = data.data[0];
       const description = anime.attributes.description;
+        fetch(`https://api.mymemory.translated.net/get?q=${anime.attributes.description}&langpair=en|pt`)
+        .then(response => response.json())
+        .then(data => {
+           const descriptionTrans = data.responseData.translatedText
+        })
       const title = anime.attributes.titles.en;
       const posterImage = anime.attributes.posterImage.large;
       const youtubeVideoId = anime.attributes.youtubeVideoId;
@@ -329,7 +334,7 @@ client.on('messageCreate', (message) => {
 const embed = new EmbedBuilder()
         .setColor('#0099ff')
         .setTitle('Anime')
-        .setDescription(description)
+        .setDescription(descriptionTrans)
         .addFields(
           { name: 'Anime', value: title },
          
@@ -354,7 +359,7 @@ const embed = new EmbedBuilder()
                 
 const encodedSearchTerm = encodeURIComponent(query);
 
-const url = `https://api.duckduckgo.com/?q=${encodedSearchTerm}&format=json&lang=pt-pt`;
+const url = `https://api.duckduckgo.com/?q=${encodedSearchTerm}&format=json`;
 
 fetch(url)
   .then(response => response.json())
