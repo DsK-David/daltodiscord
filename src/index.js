@@ -324,6 +324,11 @@ client.on('messageCreate', (message) => {
         .then(data => {
            const descriptionTrans = data.responseData.translatedText
         })
+                      .catch(error => {
+    console.error('Ocorreu um erro:', error);
+       message.channel.send('Ocorreu um erro :',erro);
+      
+  });
       const title = anime.attributes.titles.en;
       const posterImage = anime.attributes.posterImage.large;
       const youtubeVideoId = anime.attributes.youtubeVideoId;
