@@ -319,16 +319,7 @@ client.on('messageCreate', (message) => {
       }
       const anime = data.data[0];
       const description = anime.attributes.description;
-        fetch(`https://api.mymemory.translated.net/get?q=${description}&langpair=en|pt`)
-        .then(response => response.json())
-        .then(data => {
-           const descriptionTrans = data.responseData.translatedText
-        })
-                      .catch(error => {
-    console.error('Ocorreu um erro:', error);
-       message.channel.send('Ocorreu um erro :',erro);
-      
-  });
+        
       const title = anime.attributes.titles.en;
       const posterImage = anime.attributes.posterImage.large;
       const youtubeVideoId = anime.attributes.youtubeVideoId;
@@ -339,7 +330,7 @@ client.on('messageCreate', (message) => {
 const embed = new EmbedBuilder()
         .setColor('#0099ff')
         .setTitle('Anime')
-        .setDescription(descriptionTrans)
+        .setDescription(description)
         .addFields(
           { name: 'Anime', value: title },
          
@@ -370,12 +361,8 @@ fetch(url)
   .then(response => response.json())
   .then(data => {
     if (data.Abstract) {
-       fetch(`https://api.mymemory.translated.net/get?q=${data.Abstract}&langpair=en|pt`)
-        .then(response => response.json())
-        .then(data => {
-            message.reply(data.responseData.translatedText)
+            message.reply(data.Abstract)
              message.channel.send('Link:', data.AbstractURL)
-        })
     } else {
       message.channel.send('Nenhum resultado encontrado.');
     }
@@ -387,6 +374,19 @@ fetch(url)
   });
 
                         }
+                if(command === 'translate'){
+                    const fecth = require('node-fetch)
+                    const texto = args[0]
+                    const fromtrans = args[1]
+                    const totrans = args[2]
+                    
+                    fetch(`https://api.mymemory.translated.net/get?q=hello&langpair=${fromtrans}|${totrans}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const texttranslated = data.responseData.translatedText
+                        message.reply(`Texto traduzido:${texttranslated}`)
+                    })
+                }
         else if (command === 'cat') {
             const fetch = require('node-fetch');
             fetch('https://api.thecatapi.com/v1/images/search')
