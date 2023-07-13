@@ -360,8 +360,12 @@ fetch(url)
   .then(response => response.json())
   .then(data => {
     if (data.Abstract) {
-         message.reply(data.Abstract);
-      message.channel.send('Link:', data.AbstractURL);
+       fetch(`https://api.mymemory.translated.net/get?q=${data.Abstract}&langpair=en|pt`)
+        .then(response => responde.json())
+        .then(data => {
+            message.reply(data.responseData.translatedText)
+             message.channel.send('Link:', data.AbstractURL);
+        })
     } else {
       message.channel.send('Nenhum resultado encontrado.');
     }
