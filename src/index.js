@@ -375,7 +375,7 @@ fetch(url)
 
                         }
                 if(command === 'translate'){
-                    const fecth = require('node-fetch)
+                    const fetch = require('node-fetch)
                     const texto = args[0]
                     const fromtrans = args[1]
                     const totrans = args[2]
