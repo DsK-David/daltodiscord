@@ -361,7 +361,7 @@ fetch(url)
   .then(data => {
     if (data.Abstract) {
        fetch(`https://api.mymemory.translated.net/get?q=${data.Abstract}&langpair=en|pt`)
-        .then(response => responde.json())
+        .then(response => response.json())
         .then(data => {
             message.reply(data.responseData.translatedText)
              message.channel.send('Link:', data.AbstractURL)
