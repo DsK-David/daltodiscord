@@ -17,8 +17,8 @@ const client = new Client({
 });
 
 client.on('ready', () => {
-    console.log(`Bot conectado como ${client.user.tag}`);
-    guild.locale = 'pt-BR';
+    console.log(`Bot conectado como ${client.user.tag}`)
+    guild.locale = 'pt-BR'
 });
 
 client.on('messageCreate', (message) => {
