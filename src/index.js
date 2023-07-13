@@ -319,7 +319,7 @@ client.on('messageCreate', (message) => {
       }
       const anime = data.data[0];
       const description = anime.attributes.description;
-        fetch(`https://api.mymemory.translated.net/get?q=${anime.attributes.description}&langpair=en|pt`)
+        fetch(`https://api.mymemory.translated.net/get?q=${description}&langpair=en|pt`)
         .then(response => response.json())
         .then(data => {
            const descriptionTrans = data.responseData.translatedText
