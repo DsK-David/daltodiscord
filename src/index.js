@@ -350,7 +350,7 @@ const embed = new EmbedBuilder()
                 
 const encodedSearchTerm = encodeURIComponent(query);
 
-const url = `https://api.duckduckgo.com/?q=${encodedSearchTerm}&format=json`;
+const url = `https://api.duckduckgo.com/?q=${encodedSearchTerm}&format=json&lang=pt-pt`;
 
 fetch(url)
   .then(response => response.json())
