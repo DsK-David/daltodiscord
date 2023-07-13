@@ -364,7 +364,7 @@ fetch(url)
         .then(response => responde.json())
         .then(data => {
             message.reply(data.responseData.translatedText)
-             message.channel.send('Link:', data.AbstractURL);
+             message.channel.send('Link:', data.AbstractURL)
         })
     } else {
       message.channel.send('Nenhum resultado encontrado.');
