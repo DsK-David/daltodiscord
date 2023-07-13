@@ -343,13 +343,32 @@ const embed = new EmbedBuilder()
 
     })
                   
-                
-            
-               
-            
-               
- 
             }
+            if(command == 'search'){
+                const query = args.join(' ')
+                 const fetch = require('node-fetch')
+                
+const encodedSearchTerm = encodeURIComponent(query);
+
+const url = `https://api.duckduckgo.com/?q=${encodedSearchTerm}&format=json`;
+
+fetch(url)
+  .then(response => response.json())
+  .then(data => {
+    if (data.Abstract) {
+         message.reply(data.Abstract);
+      message.channel.send('Link:', data.AbstractURL);
+    } else {
+      message.channel.send('Nenhum resultado encontrado.');
+    }
+  })
+  .catch(error => {
+    console.error('Ocorreu um erro:', error);
+       message.channel.send('Ocorreu um erro na pesquisa:',eroro);
+      
+  });
+
+                        }
         else if (command === 'cat') {
             const fetch = require('node-fetch');
             fetch('https://api.thecatapi.com/v1/images/search')
