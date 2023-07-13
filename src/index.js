@@ -377,7 +377,7 @@ fetch(url)
   })
   .catch(error => {
     console.error('Ocorreu um erro:', error);
-       message.channel.send('Ocorreu um erro na pesquisa:',eroro);
+       message.channel.send('Ocorreu um erro na pesquisa:',erro);
       
   });
 
