@@ -113,6 +113,8 @@ client.on('messageCreate', (message) => {
                 {name: 'anime (nome do anime)',value:'Manda informações sobre o anime como foto descrção e trailer official'},
                 {name:'waifu',value:'Mostra uma imagem aleatoria de um waifu'},
                 { name: 'flipcoin', value: 'Joga uma moeda e mostra o resultado (cara ou coroa).' },
+                { name: 'search (oque deseja pesquisar)', value: 'Retorna o resultado da pesquisa em ingles' },
+                { name: 'translate (oque deseja traduzir) (lingua origim) (lingua que quer traduzir)', value: 'faz a tradução de uma palavra para qualquer idioma' },
                 { name: 'roll (quantidade de lados do dado)', value: 'Rola um dado com a quantidade de lados especificada.' },
                 { name: 'kick (nome da pessoa)', value: 'Expulsa a pessoa do servidor (apenas para moderadores).' },
                 { name: 'math (número1 número2 operador)', value: 'Realiza uma operação matemática básica (+, -, *, /).' },
